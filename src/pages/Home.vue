@@ -1,19 +1,6 @@
 <template>
   <main class="Home">
-    <div>
-      <h1 class="mb-8">AJ's Desktop</h1>
-    </div>
-
-    <section class="mb-5">
-      Hello, my name's Alfred Cepeda. I'm a software engineer, gamer and sci fi enthusiast
-      <br />
-      In other words, I'm nerd.
-      <br />
-      I also have a cat named Luna, check her out in Pictures!
-      <span class="text-green-500">Double click</span> to open it
-    </section>
-
-    <section class="flex flex-row flex-wrap gap-10">
+    <section class="flex flex-row flex-wrap gap-10 hidden">
       <section class="border-2 border-indigo-200 p-3 grow min-w-[350px]">
         <h2 class="text-indigo-300 mb-1">
           Front End Skills
@@ -63,21 +50,11 @@
 
 <script lang="ts">
 import { defineComponent } from "vue"
-import File from "../components/file.vue";
-import Folder from "../components/folder.vue";
-import Window from "../components/windows/window.vue";
 import ProgressBar from "../components/progress-bar.vue";
-import FileData from "../models/FileData";
-import FolderData from "../models/FolderData";
-import EmbedData from "../models/EmbedData";
-import {getAllWindows, openWindow, state} from "../store/app";
-import FolderWindow from "../components/windows/folder-window.vue";
-import EmbedWindow from "../components/windows/embed-window.vue";
-import WindowProvider from "../components/windows/window-provider.vue";
 
 export default defineComponent({
     name: "Home",
-    components: {WindowProvider, EmbedWindow, FolderWindow, File, Folder, Window, ProgressBar },
+    components: {ProgressBar},
     data() {
         return {
           frontEndBars: [

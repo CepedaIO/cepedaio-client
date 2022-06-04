@@ -2,7 +2,7 @@
   <main
     class="File inline-flex flex-col items-center cursor-default py-1 box-border"
     :class="{
-      'absolute': movable,
+      'absolute': isMovable,
       'bg-selected border-2 border-white': active
     }"
     :style="{ left, top }"
@@ -13,7 +13,7 @@
   >
     <section class="min-h-[55px] flex flex-col items-center justify-around">
       <div class="px-2 m-auto" v-if="data.icon">
-        <i class="fa-3x" :class="data.icon" />
+        <i class="fa-2x" :class="data.icon" />
       </div>
 
       <img v-else-if="data.image" :src="data.image" :alt="data.label || data.icon" class="max-w-[50px] m-auto" />
@@ -22,7 +22,7 @@
         {{ data.iconLabel }}
       </div>
 
-      <div class="px-1 mt-auto">
+      <div class="px-1 mt-auto text-xs">
         {{ data.label || data.id }}
       </div>
     </section>
@@ -43,6 +43,10 @@ export default defineComponent({
       type: FileData,
       required: true
     },
+    movable: {
+      type: Boolean,
+      default: true
+    },
     window: WindowData
   },
   computed: {
@@ -53,15 +57,17 @@ export default defineComponent({
   mounted() {
     const bounds = this.$el.getBoundingClientRect();
 
-    this.setPosition({
-      left: this.window ? bounds.left : bounds.left + 135,
-      top: this.window ? bounds.top : bounds.top - 10
-    });
-    this.movable = true;
+    if(this.movable) {
+      this.setPosition({
+        left: this.window ? bounds.left : bounds.left + 135,
+        top: this.window ? bounds.top : bounds.top - 10
+      });
+      this.isMovable = true;
+    }
   },
   data() {
     return {
-      movable: false
+      isMovable: false
     }
   },
   methods: {

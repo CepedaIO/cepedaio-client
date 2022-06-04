@@ -8,7 +8,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { state} from "./store/app";
-import Desktop from "./components/desktop.vue";
+import Desktop from "./components/desktop/index.vue";
 
 export default defineComponent({
   name: "App",

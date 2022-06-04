@@ -1,5 +1,5 @@
 <template>
-  <File :data="fileData" />
+  <File :data="fileData" :movable="movable" />
 </template>
 
 <script lang="ts">
@@ -17,6 +17,10 @@ export default defineComponent({
     data: {
       type: FolderData,
       required: true
+    },
+    movable: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
