@@ -1,8 +1,7 @@
 export default class FolderData implements iFolder {
-  type = "FolderData";
   id!: string;
   label?: string;
-  files?: Array<iFile>;
+  files?: Array<iFile | iContribution>;
   folders?: Array<iFolder>;
 
   constructor(data: iFolder) {

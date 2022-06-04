@@ -1,5 +1,6 @@
-export default class FileData {
+export default class FileData implements iFile {
   id!: string;
+  class?: string
   icon?: string;
   iconLabel?: string;
   image?: string;
@@ -11,7 +12,7 @@ export default class FileData {
 
   activated!: (data:this) => void;
 
-  constructor(data: PartialBy<FileData, 'position'>) {
+  constructor(data: PartialBy<iFile, 'position'>) {
     Object.assign(this, data)
   }
 }

@@ -24,7 +24,7 @@ export default defineComponent({
       fileData: new FileData({
         id: this.data.id,
         label: this.data.label,
-        icon: 'fas fa-folder',
+        icon: 'fas fa-folder text-orange-200',
         activated: () => {
           return openWindow(this.data);
         }

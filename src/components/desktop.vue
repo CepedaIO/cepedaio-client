@@ -16,6 +16,7 @@ import FolderData from "../models/FolderData";
 import File from "./file.vue";
 import Folder from "./folder.vue";
 import WindowProvider from "./windows/window-provider.vue";
+import ContributionData from "../models/ContributionData";
 
 export default defineComponent({
   name: 'Desktop',
@@ -25,7 +26,7 @@ export default defineComponent({
       files: [
         new FileData({
           id: 'Resume',
-          icon: 'fas fa-file-pdf',
+          icon: 'fas fa-file-pdf text-red-500',
           activated: () => openWindow(new EmbedData({
             id: 'ResumePDF',
             label: 'PDF',
@@ -39,7 +40,7 @@ export default defineComponent({
         }),
         new FileData({
           id: 'LinkedIn',
-          icon:'fab fa-linkedin',
+          icon:'fab fa-linkedin text-blue-500',
           activated: () => window.open('https://linkedin.com/in/alfred-cepeda', '_blank')
         })
       ],
@@ -65,10 +66,13 @@ export default defineComponent({
         new FolderData({
           id: "Contributions",
           files: [
-            new FileData({
+            new ContributionData({
               id: 'Springbig',
-              image: '/springbig.png',
-              activated: () => window.open('https://springbig.com/', '_blank')
+              images: {
+                icon: '/springbig.logo.png',
+                hero: '/springbig.hero.png'
+              },
+              href: 'https://springbig.com'
             }),
             new FileData({
               id: 'Universal Studios',
