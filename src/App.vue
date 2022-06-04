@@ -1,5 +1,5 @@
 <template>
-  <main class="flex flex-col w-screen h-screen" @click="onClick">
+  <main class="flex flex-col w-screen h-screen overflow-hidden" @click="onClick">
     <router-view class='container mx-auto'></router-view>
   </main>
 </template>

@@ -1,6 +1,8 @@
 <template>
   <main style="background: blue">
     <Icon v-for="icon in icons" :key="icon.label" :self="icon" />
+
+    <Folder name="projects" />
   </main>
 </template>
 
@@ -8,16 +10,19 @@
 import { defineComponent } from "vue";
 import { shuffle } from 'lodash';
 import Icon, { IconData } from "../components/icon.vue";
+import Folder from "../components/folder.vue";
+import { folderStore } from "../store/folder";
 
 export default defineComponent({
     name: "Home",
+    components: { Icon, Folder },
     data() {
         return {
           icons: [
             new IconData({
               class:'fa fa-folder',
               label: 'Projects',
-              activated: () => console.log('did activate projects')
+              activated: () => folderStore.openFolder('projects')
             }),
             new IconData({
               class:'fas fa-home',
@@ -45,8 +50,7 @@ export default defineComponent({
                 this.remainingPhotos = shuffle(this.photos);
             this.currentPhoto = this.remainingPhotos.pop() as string;
         }
-    },
-    components: { Icon }
+    }
 });
 </script>
 
