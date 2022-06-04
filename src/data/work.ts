@@ -5,6 +5,7 @@ import ContributionData from "../models/ContributionData";
 export const allWork = [
   new ContributionData({
     id: 'Springbig',
+    size: 'medium',
     position: 'Lead Front End Developer',
     description: 'SaaS providing customer rewards platform for medical marijuana dispensaries. I directly managed 5 developers and was heavily involved in management through a deparment of about 30 people',
     image: {
@@ -33,6 +34,7 @@ export const allWork = [
   }),
   new ContributionData({
     id: 'Universal Studio',
+    size: 'corporate',
     position: 'Everything IT Engineer',
     description: 'Part of a rapid response team that address whatever issue were prioritized. It could be anything from partk services to QA to hanging stuff up on the walls in the office',
     image: '/universalstudios.jfif',
@@ -58,6 +60,7 @@ export const allWork = [
   }),
   new ContributionData({
     id: 'Electronic Arts',
+    size: 'corporate',
     position: 'Full Stack Developer',
     description: 'Internal tool used game developer and analytic teams throughout the world. We provided documentation on standards that made game analytics consistent and easier to understand',
     image: '/ea.jfif',
@@ -82,6 +85,7 @@ export const allWork = [
   }),
   new ContributionData({
     id: 'Flight Schedule Pro',
+    size: 'xs',
     position: 'Senior Front End Developer',
     description: 'Pilot training, plane management and scheduling software used by companies all around the world. Also included online courses and integrated e-commerce billing',
     image: '/flightschedule.gif',
@@ -108,6 +112,7 @@ export const allWork = [
   }),
   new ContributionData({
     id: 'Urban Fort',
+    size: 'xs',
     position: 'Full Stack Developer',
     description: 'Sub contracting with individual developer to provide services to real estate company and data scrape of iTunes/Amazon websites',
     iconLabel: 'UB',
@@ -131,6 +136,7 @@ export const allWork = [
   }),
   new ContributionData({
     id: '8 Bit Consulting',
+    size: 'small',
     position: 'Full Stack Developer',
     description: 'Sub-contracting for consulting company providing development services to Panera Bread involving a full redesign of their in-house inventory system',
     image: '/panera.jfif',
@@ -158,6 +164,7 @@ export const allWork = [
   }),
   new ContributionData({
     id: 'RetireReady',
+    size: 'xs',
     position: 'Front-End Developer',
     description: 'SaaS specializing in retirement plans and investing. Predicted ROI over a variable period of time using a large library of different investing strategies',
     image: '/retireready.png',
@@ -181,6 +188,7 @@ export const allWork = [
   }),
   new ContributionData({
     id: 'Blackbird Crow',
+    size: 'xs',
     position: 'IT Support',
     description: 'Provided all IT support to a local, family owned medicaly marijuana dispensary. Included but not limited to network and system administration, POS management and integration',
     iconLabel: 'BC',
@@ -197,6 +205,7 @@ export const allWork = [
   }),
   new ContributionData({
     id: 'reBaked',
+    size: 'small',
     position: 'Lead iOS Developer',
     description: 'A halloween themed AV recording and uploading application meant to be used to play pranks on friends. You chose a sound, set up the phone somewhere and when it detected someone going by, would record and upload their reaction',
     image: '/rebaked.png',
@@ -224,6 +233,7 @@ export const allWork = [
   }),
   new ContributionData({
     id: 'Bonzi Sports',
+    size: 'small',
     position: 'Fullstack/iOS Developer',
     description: 'Sports software specializing in connecting referees with minor leagues. Managed newly acquired GameOfficials.net website and iOS application',
     image: '/bonzi.png',
@@ -251,6 +261,7 @@ export const allWork = [
   }),
   new ContributionData({
     id: 'Numedics',
+    size: 'small',
     position: 'Front-End Developer',
     description: 'Developed hospital management software specializing in diabetes care. Written in ASP.NET. I helped provide front-end development for three of their major products.Serviced hospitals located throughout Oregon',
     image: '/numedics.jpg',

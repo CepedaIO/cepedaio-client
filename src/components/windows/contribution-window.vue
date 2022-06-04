@@ -12,6 +12,9 @@
           <i class="fa-solid fa-arrow-right"></i>
           {{ endStr }}
         </div>
+        <div>
+          <span>{{ sizeMap[content.size] }} Employees</span>
+        </div>
       </header>
 
       <section class="overflow-auto p-2 pl-5">
@@ -49,6 +52,17 @@ export default defineComponent({
     content: {
       type: ContributionData,
       required: true
+    },
+  },
+  data() {
+    return {
+      sizeMap: {
+        'xs': '0-10',
+        'small':'11-50',
+        'medium':'51-250',
+        'large':'251-500',
+        'corporate': '500+'
+      }
     }
   },
   computed: {

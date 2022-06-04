@@ -37,6 +37,8 @@ interface iEmbed {
   mime?: string;
 }
 
+type TeamSize = 'xs' | 'small' | 'medium' | 'large' | 'corporate';
+
 interface iContribution {
   id: string;
   label?: string;
@@ -46,6 +48,7 @@ interface iContribution {
   link: string;
   start: Date;
   end?: Date;
+  size: TeamSize;
   technologies?: string[];
   points: string[];
   description: string;

@@ -7,6 +7,7 @@ export default class ContributionData implements iContribution {
   link!: string;
   start!: Date;
   end?: Date;
+  size!: TeamSize;
   technologies?: string[];
   points!: string[];
   description!: string;
