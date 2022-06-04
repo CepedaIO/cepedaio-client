@@ -10,6 +10,7 @@
     "authenticate": "docker run -ti --name gcloud-config gcr.io/google.com/cloudsdktool/google-cloud-cli /bin/bash -c 'gcloud auth login && gcloud config set project cepedaio'"
   },
   "devDependencies": {
+    "@types/date-fns": "^2.6.0",
     "@types/lodash": "^4.14.178",
     "@types/node": "^17.0.7",
     "@vitejs/plugin-vue": "^2.0.1",
@@ -27,5 +28,8 @@
     "vue": "3",
     "vue-router": "4",
     "vue-tsc": "^0.30.0"
+  },
+  "dependencies": {
+    "date-fns": "^2.28.0"
   }
 }

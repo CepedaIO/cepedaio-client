@@ -41,13 +41,15 @@ interface iContribution {
   id: string;
   label?: string;
   position: string;
-  image: string;
+  image?: string | { icon:string; hero:string; };
+  iconLabel?: string;
   link: string;
   start: Date;
   end?: Date;
-  technologies: string[];
+  technologies?: string[];
   points: string[];
   description: string;
+  otherLinks?: string[];
 }
 
 type iWindowable = iFolder | iEmbed | iContribution;

@@ -16,10 +16,9 @@ import FileData from "../../models/FileData";
 import {openWindow} from "../../store/app";
 import EmbedData from "../../models/EmbedData";
 import FolderData from "../../models/FolderData";
-import ContributionData from "../../models/ContributionData";
 import File from "../file.vue";
 import Folder from "../folder.vue";
-import {fileFromWork, Numedics} from "../../data/work";
+import {allWorkFiles} from "../../data/work";
 
 export default defineComponent({
   name:'app-menu',
@@ -66,67 +65,7 @@ export default defineComponent({
       }),
       contributions: new FolderData({
         id: "Contributions",
-        files: [
-          new ContributionData({
-            id: 'Springbig',
-            images: {
-              icon: '/springbig.logo.png',
-              hero: '/springbig.hero.png'
-            },
-            href: 'https://springbig.com'
-          }),
-          new FileData({
-            id: 'Universal Studios',
-            image: '/universalstudios.jfif',
-            activated: () => window.open('https://www.universalorlando.com/', '_blank')
-          }),
-          new FileData({
-            id: 'Electronic Arts',
-            image: '/ea.jfif',
-            activated: () => window.open('https://www.ea.com/', '_blank')
-          }),
-          new FileData({
-            id: 'Flight Schedule Pro',
-            image: '/flightschedule.gif',
-            activated: () => window.open('https://app.flightschedulepro.com/', '_blank')
-          }),
-          new FileData({
-            id: 'Urban Fort',
-            iconLabel: 'UB',
-            activated: () => window.open('http://urbanfort.com/', '_blank')
-          }),
-          new FileData({
-            id: 'Panera Bread',
-            image: '/panera.jfif',
-            activated: () => window.open('https://www.panerabread.com/', '_blank')
-          }),
-          new FileData({
-            id: '8 Bit Consulting',
-            image: '/8bit.png',
-            activated: () => window.open('https://www.facebook.com/8BitConsulting/', '_blank')
-          }),
-          new FileData({
-            id: 'RetireReady',
-            image: '/retireready.png',
-            activated: () => window.open('https://retireready.com/', '_blank')
-          }),
-          new FileData({
-            id: 'Blackbird Crow',
-            iconLabel: 'BC',
-            activated: () => window.open('https://blackbirdcrow.business.site/', '_blank')
-          }),
-          new FileData({
-            id: 'ReBaked',
-            image: '/rebaked.png',
-            activated: () => window.open('https://medium.com/@mfonisoarchibong1/monetization-of-skills-by-rebaked-108002601a61', '_blank')
-          }),
-          new FileData({
-            id: 'Bonzi',
-            image: '/bonzi.png',
-            activated: () => window.open('https://www.getapp.com/recreation-wellness-software/a/bonzi/', '_blank')
-          }),
-          fileFromWork(Numedics)
-        ]
+        files: allWorkFiles()
       })
     }
   }

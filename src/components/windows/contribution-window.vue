@@ -1,14 +1,17 @@
 <template>
   <Window :key="window.id" :data="window">
     <main class="ContributionWindow h-full flex flex-col">
-      <header class="text-center mb-5">
+      <header class="text-center mb-1">
         <a :href="content.link" target="_blank">
-          <img :src="content.image" />
+          <img v-if="typeof content.image === 'object'" :src="content.image.hero" :alt="content.link" class="max-h-[125px] m-auto" />
+          <img v-else-if="content.image" :src="content.image" :alt="content.link" class="max-h-[125px] m-auto"/>
+          <span v-else-if="content.iconLabel" class="text-7xl">{{ content.iconLabel }}</span>
         </a>
-        <a :href="content.link" target="_blank">
-          {{ content.link }}
-        </a>
-        <span>{{ content.start }} - {{ content.end }}</span>
+        <div class="mt-2">
+          {{ startStr}}
+          <i class="fa-solid fa-arrow-right"></i>
+          {{ endStr }}
+        </div>
       </header>
 
       <section class="overflow-auto p-2 pl-5">
@@ -31,6 +34,7 @@
 <script lang="ts">
 import Window from "./window.vue";
 import { defineComponent } from "vue";
+import { format } from "date-fns";
 import WindowData from "../../models/WindowData";
 import ContributionData from "../../models/ContributionData";
 
@@ -49,7 +53,10 @@ export default defineComponent({
   },
   computed: {
     startStr() {
-      return form
+      return format(this.content.start, 'yyyy-MM');
+    },
+    endStr() {
+      return this.content.end ? format(this.content.end, "yyyy-MM") : 'Present';
     }
   }
 });
