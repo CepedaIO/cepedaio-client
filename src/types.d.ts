@@ -3,6 +3,7 @@ type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
 interface Position {
   top: number;
   left: number;
+  index?: number;
 }
 
 interface iWindow {
@@ -33,6 +34,7 @@ interface iEmbed {
   id: string;
   label?: string;
   src: string;
+  mime?: string;
 }
 
 interface iContribution {

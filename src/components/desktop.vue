@@ -30,7 +30,8 @@ export default defineComponent({
           activated: () => openWindow(new EmbedData({
             id: 'ResumePDF',
             label: 'PDF',
-            src: '/Resume.pdf'
+            src: '/Resume.pdf',
+            mime: 'application/pdf'
           }))
         }),
         new FileData({

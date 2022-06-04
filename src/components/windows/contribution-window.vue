@@ -1,5 +1,5 @@
 <template>
-  <Window :key="window.id" :data="window" :style="{ 'z-index': 10 + window.index }">
+  <Window :key="window.id" :data="window">
     <header class="max-w-[350px] float-left">
       <h1 class="text-center">{{ content.label || content.id}}</h1>
       <img :src="content.images.hero" />
@@ -26,8 +26,14 @@ export default defineComponent({
   name: 'ContributionWindow',
   components: { Window },
   props: {
-    window: WindowData,
-    content: [ContributionData]
+    window: {
+      type: WindowData,
+      required: true
+    },
+    content: {
+      type: ContributionData,
+      required: true
+    }
   }
 });
 </script>

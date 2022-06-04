@@ -1,5 +1,5 @@
 <template>
-  <component v-bind:is="component" :window="window" :content="content" :style="{ 'z-index' : 10 + index }" />
+  <component v-bind:is="component" :window="window" :content="content" />
 </template>
 
 <script>
@@ -29,8 +29,14 @@ export default {
   name: "WindowProvider",
   components: {FolderWindow, EmbedWindow, ContributionWindow},
   props: {
-    window: WindowData,
-    content: FolderData | EmbedData,
+    window: {
+      type: WindowData,
+      required: true
+    },
+    content: {
+      type: [FolderData, EmbedData, ContributionData],
+      required: true
+    },
     index: Number
   },
   computed: {

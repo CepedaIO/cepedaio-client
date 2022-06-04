@@ -10,7 +10,6 @@ export const getAllWindows = computed<Array<[ iWindow, iWindowable, number]>>(()
   state.windows.map(([window, content], index) => [window, content, index])
 );
 
-
 export function getWindow(id: string): [iWindow, iWindowable] | undefined {
   return state.windows.find(([window]) => window.id === id);
 }

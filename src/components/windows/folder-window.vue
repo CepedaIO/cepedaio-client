@@ -1,5 +1,5 @@
 <template>
-  <Window :data="window" :style="{ 'z-index': 10 + window.index }">
+  <Window :data="window">
     <div class="relative w-full h-full gap-x-5 flex flex-row flex-wrap p-2">
       <template v-for="file in files">
         <File :data="file" :window="window"/>
@@ -38,7 +38,7 @@ export default defineComponent({
   },
   computed: {
     files(): Array<FileData> {
-      return (this.content.files || []) .map((file) => {
+      return (this.content.files || []) .map((file) => {;
         if(file instanceof ContributionData) {
           const contributionFile = new FileData({
             id: file.id,

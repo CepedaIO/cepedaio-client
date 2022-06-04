@@ -1,5 +1,5 @@
 <template>
-  <Window :key="window.id" :data="window" :style="{ 'z-index': 10 + window.index }">
+  <Window :key="window.id" :data="window">
     <img v-if="isImage" class="relative w-auto h-full m-auto" :src="content.src" />
     <embed v-if="!isImage" :src="content.src" width="100%" height="100%" :type="content.mime">
   </Window>
@@ -15,8 +15,14 @@ export default defineComponent({
   name: 'EmbedWindow',
   components: { Window },
   props: {
-    window: WindowData,
-    content: [EmbedData]
+    window: {
+      type: WindowData,
+      required: true
+    },
+    content: {
+      type: EmbedData,
+      required: true
+    }
   },
   computed: {
     isImage() {

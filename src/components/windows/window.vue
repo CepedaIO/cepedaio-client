@@ -1,6 +1,6 @@
 <template>
   <main class="Window absolute flex flex-col shadow-xl"
-    :style="{ left, top }"
+    :style="{ left, top, 'z-index': zIndex }"
     :class="{
       'w-screen h-screen': data.fullscreen
     }"
@@ -62,6 +62,7 @@ export default defineComponent({
   computed: {
     left() { return `${this.data.position.left}px`; },
     top() { return `${this.data.position.top}px`; },
+    zIndex() { return 10 + (this.data.position.index || 0); }
   },
   mounted() {
     this.setPosition(this.$el.getBoundingClientRect());
