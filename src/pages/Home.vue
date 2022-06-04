@@ -1,63 +1,31 @@
 <template>
   <main style="background: blue">
-    <Icon>
-      <template #showcase>
-        <i class="fas fa-home fa-2x"></i>
-      </template>
-
-      <template #label>
-        Home
-      </template>
-    </Icon>
-
-    <Icon>
-      <template #showcase>
-        <i class="fas fa-home fa-2x"></i>
-      </template>
-
-      <template #label>
-        Home
-      </template>
-    </Icon>
-
-    <Icon>
-      <template #showcase>
-        <i class="fas fa-home fa-2x"></i>
-      </template>
-
-      <template #label>
-        Home
-      </template>
-    </Icon>
-
-    <Icon>
-      <template #showcase>
-        <i class="fas fa-home fa-2x"></i>
-      </template>
-
-      <template #label>
-        Home
-      </template>
-    </Icon>
+    <Icon v-for="icon in icons" :key="icon.label" :self="icon" />
   </main>
 </template>
 
 <script lang="ts">
-import { ref, defineComponent } from "vue";
+import { defineComponent } from "vue";
 import { shuffle } from 'lodash';
-import Icon from "../components/icon.vue";
-
-interface HomePageData {
-  remainingPhotos: string[]
-  currentPhoto: string
-  photos: string[]
-}
+import Icon, { IconData } from "../components/icon.vue";
 
 export default defineComponent({
     name: "Home",
     data() {
         return {
-            remainingPhotos: [],
+          icons: [
+            new IconData({
+              class:'fa fa-folder',
+              label: 'Projects',
+              activated: () => console.log('did activate projects')
+            }),
+            new IconData({
+              class:'fas fa-home',
+              label:'Home',
+              activated: () => console.log('activated home')
+            })
+          ],
+            remainingPhotos: [] as string[],
             currentPhoto: "",
             photos: [
                 "https://storage.googleapis.com/cepedaio.appspot.com/luna/20210717_213807.jpg",
@@ -65,7 +33,7 @@ export default defineComponent({
                 "https://storage.googleapis.com/cepedaio.appspot.com/luna/20210810_134007.jpg",
                 "https://storage.googleapis.com/cepedaio.appspot.com/luna/20210813_165559.jpg"
             ],
-        } as HomePageData;
+        }
     },
     mounted() {
         this.pickPhoto();

@@ -1,5 +1,5 @@
-import { ComponentPublicInstance, reactive } from "vue";
+import { reactive } from "vue";
 
 export const iconStore = reactive({
-  active: null as ComponentPublicInstance | null
+  active: null as HTMLElement | null
 })

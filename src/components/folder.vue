@@ -14,18 +14,7 @@
 import { defineComponent } from "vue";
 import movable from "./movable.vue";
 
-export class IconData {
-  class!: string;
-  label!: string;
-  activated!: () => void;
-
-  constructor(self: IconData) { Object.assign(this, self) }
-}
-
 export default defineComponent({
-  components: { movable },
-  props: {
-    self: IconData
-  }
+  components: { movable }
 });
 </script>
