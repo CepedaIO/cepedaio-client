@@ -53,9 +53,10 @@ export default defineComponent({
   },
   mounted() {
     const bounds = this.$el.getBoundingClientRect();
+
     this.setPosition({
-      left: bounds.left + 135,
-      top: bounds.top - 10
+      left: this.window ? bounds.left : bounds.left + 135,
+      top: this.window ? bounds.top : bounds.top - 10
     });
     this.movable = true;
   },
