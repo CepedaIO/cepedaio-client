@@ -1,5 +1,5 @@
 <template>
-  <main 
+  <main
     class="icon inline-flex flex-col items-center cursor-default py-1 box-border"
     :class="{ 
       'absolute': movable,
@@ -8,25 +8,41 @@
     :style="{ left, top }"
     v-move="onMove"
     @mousedown="onMouseDown"
+    @dblclick="self.activated(self)"
     @click.stop="() => {}"
-  >  
-    <slot />
+  >
+    <div class="px-2">
+      <i class="fa-2x" :class="self.class" />
+    </div>
+    
+    <div>
+      {{ self.label }}  
+    </div>
   </main>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import move from "../directives/move";
+import { folderStore } from "../store/folder";
 import { iconStore } from "../store/icons";
+
+export class FileData {
+  class!: string;
+  label!: string;
+  activated!: (self:this) => void;
+
+  constructor(self: FileData) { Object.assign(this, self) }
+}
 
 export default defineComponent({
   directives: { move },
-  data() {
-    return {
-      movable: false,
-      _left: 0,
-      _top: 0
-    }
+  props: {
+    self: {
+      type: FileData,
+      required: true
+    },
+    parent: String
   },
   computed: {
     left() { return `${this._left}px`; },
@@ -39,13 +55,27 @@ export default defineComponent({
     this._top = top;
     this.movable = true;
   },
+  data() {
+    return {
+      movable: false,
+      _left: 0,
+      _top: 0
+    }
+  },
   methods: {
     onMouseDown() {
       iconStore.active = this.$el;
     },
     onMove(options:any) {
-      this._left = options.left;
-      this._top = options.top;
+      if(this.parent) {
+        const folder = folderStore.state.folders.get(this.parent)!;
+
+        this._left = options.left - folder.left;
+        this._top = options.top - folder.top - 48;
+      } else {
+        this._left = options.left;
+        this._top = options.top;
+      }
     }
   }
 });
@@ -59,7 +89,6 @@ export default defineComponent({
     background-color: #D8EAF9;
     border: 2px solid #DEEDF9;
   }
-
   .active:hover {
     background-color: #C4E0F6
   }

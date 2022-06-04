@@ -7,9 +7,9 @@
     }"
     :style="{ left, top }"
   >
-    <header class="pl-5 pr-2 py-2 flex justify-between items-center box-border" v-move="onMove" @dblclick="toggleFullscreen">
+    <header class="pl-5 pr-2 py-2 flex justify-between items-center box-border z-10" v-move="onMove" @dblclick="toggleFullscreen">
       <span>
-        Projects
+        {{ self.label }}
       </span>
       
       <ul class="flex">
@@ -25,8 +25,8 @@
       </ul>
     </header>
 
-    <section class="grow bg-white border border-2 border-blue-300 box-content">
-
+    <section class="grow bg-white border border-2 border-blue-300 box-content relative overflow-hidden">
+      <File v-for="(file, index) in self.files" :key="index" :self="file" :parent="self.id" class="z-0" />
     </section>
   </main>
 </template>
@@ -35,13 +35,31 @@
 import { defineComponent } from "vue";
 import move from "../directives/move";
 import { folderStore } from "../store/folder";
+import File, { FileData } from "./file.vue";
+
+export function isFolder(obj:any): obj is FolderData {
+  return typeof obj.id === 'string' && typeof obj.label === 'string' && Array.isArray(obj.items);
+}
+
+export class FolderData {
+  id!: string;
+  label!: string;
+  files!: Array<FileData>;
+  left = 0;
+  top = 0;
+
+  constructor(self: Omit<FolderData, 'left' | 'top'>) {
+    Object.assign(this, self);
+  }
+}
 
 export default defineComponent({
   name: 'Folder',
   directives: { move },
+  components: { File },
   props: {
-    name: {
-      type: String,
+    self: {
+      type: FolderData,
       required: true
     }
   },
@@ -49,42 +67,42 @@ export default defineComponent({
     return {
       movable: false,
       fullscreen: false,
-      _left: 0,
-      _top: 0,
       oldLeft: 0,
       oldTop: 0
     }
   },
   computed: {
-    left() { return `${this._left}px`; },
-    top() { return `${this._top}px`; },
-    hidden() { return !folderStore.state.active.includes(this.name); }
+    left() { return `${this.self.left}px`; },
+    top() { return `${this.self.top}px`; },
+    hidden() { return !folderStore.state.active.includes(this.self.id); },
   },
   mounted() {
     const { left, top } = this.$el.getBoundingClientRect();
+    
+    this.self.left = left; 
+    this.self.top = top;
 
-    this._left = left; 
-    this._top = top;
+    folderStore.register(this.self);
   },
   methods: {
     onMove(options:any) {
-      this._left = options.left;
-      this._top = options.top;
+      this.self.left = options.left;
+      this.self.top = options.top;
     },
     onClose() {
-      folderStore.closeFolder(this.name);
+      folderStore.closeFolder(this.self.id);
     },
     toggleFullscreen() {
       this.fullscreen = !this.fullscreen;
 
       if(this.fullscreen) {
-        this.oldLeft = this._left;
-        this.oldTop = this._top;
-        this._left = 0;
-        this._top = 0;
+        this.oldLeft = this.self.left;
+        this.oldTop = this.self.top;
+        this.self.left = 0;
+        this.self.top = 0;
       } else {
-        this._left = this.oldLeft;
-        this._top = this.oldTop;
+        this.self.left = this.oldLeft;
+        this.self.top = this.oldTop;
       }
     }
   }

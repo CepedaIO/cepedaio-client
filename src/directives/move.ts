@@ -20,9 +20,9 @@ export default {
         const { left, top } = el.getBoundingClientRect();
         options.innerLeft = event.clientX - left;
         options.innerTop = event.clientY - top;
-        event.preventDefault();
   
         document.addEventListener('mousemove', options.mousemove)
+        event.preventDefault();
       },
       mousemove: (event: MouseEvent) => {
         binding.value({

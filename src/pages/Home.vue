@@ -1,39 +1,46 @@
 <template>
   <main class="relative w-full h-full">
-    <template v-for="(item, index) in items" :key="index">
-      <Icon :self="item.icon" class="z-0" />
-      <Folder v-if="item.folder" :name="item.folder" class="z-10" />
-    </template>
+    <File v-for="file in files" :key="file.label" :self="file" />
+    <Folder v-for="folder in folders" :key="folder.id" :self="folder" />
   </main>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import { shuffle } from 'lodash';
-import Icon, { IconData } from "../components/icon.vue";
-import Folder from "../components/folder.vue";
+import File, { FileData } from "../components/file.vue";
+import Folder, { FolderData } from "../components/folder.vue";
 import { folderStore } from "../store/folder";
 
 export default defineComponent({
     name: "Home",
-    components: { Icon, Folder },
+    components: { File, Folder },
     data() {
         return {
-          items: [
-            {
-              folder: 'projects',
-              icon: new IconData({
-                class:'fa fa-folder',
-                label: 'Projects',
-                activated() { return folderStore.openFolder('projects') }
-              })
-            }, {
-              icon: new IconData({
-                class:'fas fa-home',
-                label:'Home',
-                activated: () => console.log('activated home')
-              })
-            }
+          files: [
+            new FileData({
+              class:'fa fa-folder',
+              label: 'Projects',
+              activated() { return folderStore.openFolder('projects') }
+            }),
+            new FileData({
+              class:'fas fa-home',
+              label:'Home',
+              activated: () => console.log('activated home')
+            })
+          ],
+          folders: [
+            new FolderData({
+              id: 'projects',
+              label: 'Projects',
+              files: [
+                new FileData({
+                  class:'fas fa-home',
+                  label:'Home',
+                  activated: () => console.log('activated nested home')
+                })
+              ]
+            })
           ],
             remainingPhotos: [] as string[],
             currentPhoto: "",
