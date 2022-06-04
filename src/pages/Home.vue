@@ -49,8 +49,8 @@
 
 
     <section class="absolute inset-0 z-10">
-      <File v-for="file in files" :key="file.label" :self="file" />
-      <Folder v-for="folder in folders" :key="folder.id" :self="folder" />
+      <File v-for="file in files" :key="file.id" :data="file" />
+      <Folder v-for="folder in folders" :key="folder.id" :data="folder" />
     </section>
   </main>
 </template>
@@ -58,10 +58,12 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { shuffle } from 'lodash';
-import File, { FileData } from "../components/file.vue";
-import Folder, { FolderData } from "../components/folder.vue";
-import { folderStore } from "../store/folder";
+import File from "../components/file.vue";
+import Folder from "../components/folder.vue";
 import ProgressBar from "../components/progress-bar.vue";
+import WindowData from "../models/WindowData";
+import FileData from "../models/FileData";
+import FolderData from "../models/FolderData";
 
 export default defineComponent({
     name: "Home",
@@ -94,37 +96,38 @@ export default defineComponent({
           ],
           files: [
             new FileData({
-              class:'fa fa-folder',
-              label: 'Projects',
-              activated() { return folderStore.openFolder('projects') }
-            }),
-            new FileData({
-              class:'fas fa-home',
+              id: 'home',
+              icon:'fas fa-home',
               label:'Home',
               activated: () => console.log('activated home')
             })
-          ],
+          ],  
           folders: [
             new FolderData({
-              id: 'projects',
-              label: 'Projects',
+              id: 'picture',
+              label: 'Pictures',
+              window: new WindowData({
+                id: 'pictures',
+                label: 'Pictures',
+              }),
               files: [
                 new FileData({
-                  class:'fas fa-home',
+                  id: 'luna',
+                  image: "https://storage.googleapis.com/cepedaio.appspot.com/luna/20210717_213807.jpg",
                   label:'Home',
-                  activated: () => console.log('activated nested home')
+                  activated: () => console.log('activated home')
                 })
               ]
-            })
+            }) 
           ],
-            remainingPhotos: [] as string[],
-            currentPhoto: "",
-            photos: [
-                "https://storage.googleapis.com/cepedaio.appspot.com/luna/20210717_213807.jpg",
-                "https://storage.googleapis.com/cepedaio.appspot.com/luna/20210801_125503.jpg",
-                "https://storage.googleapis.com/cepedaio.appspot.com/luna/20210810_134007.jpg",
-                "https://storage.googleapis.com/cepedaio.appspot.com/luna/20210813_165559.jpg"
-            ],
+          remainingPhotos: [] as string[],
+          currentPhoto: "",
+          photos: [
+              "https://storage.googleapis.com/cepedaio.appspot.com/luna/20210717_213807.jpg",
+              "https://storage.googleapis.com/cepedaio.appspot.com/luna/20210801_125503.jpg",
+              "https://storage.googleapis.com/cepedaio.appspot.com/luna/20210810_134007.jpg",
+              "https://storage.googleapis.com/cepedaio.appspot.com/luna/20210813_165559.jpg"
+          ],
         }
     },
     mounted() {

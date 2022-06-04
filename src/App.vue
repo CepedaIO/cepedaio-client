@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { fileStore } from "./store/file";
+import { desktopStore } from "./store/desktop";
 
 export default defineComponent({
   name: "App",
@@ -21,7 +21,7 @@ export default defineComponent({
   },
   methods: {
     onClick() {
-      fileStore.active = null;
+      desktopStore.state.active = null;
     }
   }
 });

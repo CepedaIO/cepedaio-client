@@ -1,7 +1,6 @@
 <template>
   <main
-    class="file
-     inline-flex flex-col items-center cursor-default py-1 box-border"
+    class="file inline-flex flex-col items-center cursor-default py-1 box-border"
     :class="{
       'absolute': movable,
       active
@@ -9,15 +8,17 @@
     :style="{ left, top }"
     v-move="onMove"
     @mousedown="onMouseDown"
-    @dblclick="self.activated(self)"
+    @dblclick="data.activated(data)"
     @click.stop="() => {}"
   >
-    <div class="px-2">
-      <i class="fa-2x" :class="self.class" />
+    <div class="px-2" v-if="data.icon">
+      <i class="fa-2x" :class="data.icon" />
     </div>
 
+    <img v-else-if="data.image" :src="data.image" class="max-w-[50px]" />
+
     <div>
-      {{ self.label }}
+      {{ data.label || data.id }}
     </div>
   </main>
 </template>
@@ -25,21 +26,13 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import move from "../directives/move";
-import { folderStore } from "../store/folder";
-import { fileStore } from "../store/file";
-
-export class FileData {
-  class!: string;
-  label!: string;
-  activated!: (self:this) => void;
-
-  constructor(self: FileData) { Object.assign(this, self) }
-}
+import FileData from "../models/FileData";
+import { desktopStore } from "../store/desktop";
 
 export default defineComponent({
   directives: { move },
   props: {
-    self: {
+    data: {
       type: FileData,
       required: true
     },
@@ -48,13 +41,14 @@ export default defineComponent({
   computed: {
     left() { return `${this._left}px`; },
     top() { return `${this._top}px`; },
-    active() { return fileStore.active && fileStore.active === this.$el; }
+    active() { return desktopStore.state.active && desktopStore.state.active === this.$el; }
   },
   mounted() {
     const { left, top } = this.$el.getBoundingClientRect();
     this._left = left;
     this._top = top;
     this.movable = true;
+    desktopStore.register(this.data);
   },
   data() {
     return {
@@ -65,17 +59,17 @@ export default defineComponent({
   },
   methods: {
     onMouseDown() {
-      fileStore.active = this.$el;
+      desktopStore.state.active = this.$el;
     },
     onMove({ left, top }: { left:number, top:number }) {
       if(this.parent) {
-        const folder = folderStore.state.folders.get(this.parent)!;
+        const folder = desktopStore.getFolder(this.parent)!;
 
         this._left = left - folder.left;
         this._top = top - folder.top - 48;
       } else {
         this._left = left;
-        this._top = top;
+        this._top = top + window.scrollY!;
       }
     }
   }
@@ -83,12 +77,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-  .file {
-    border: 2px solid transparent;
-    color: black;
-    mix-blend-mode: saturation;
-  }
-
   .active {
     background-color: #D8EAF9;
     border: 2px solid #DEEDF9;
