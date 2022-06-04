@@ -7,10 +7,8 @@ interface Position {
 
 interface iWindow {
   id: string;
-  type: string;
   label?: string;
   position: Position;
-  index?: number;
 }
 
 interface iFile {
@@ -24,15 +22,15 @@ interface iFile {
 interface iFolder {
   id: string;
   label?: string;
-  position: Position;
-  files: Array<iFile>;
-  folders: Array<iFolder>;
+  files?: Array<iFile>;
+  folders?: Array<iFolder>;
 }
 
-interface iImage {
+interface iEmbed {
   id: string;
-  label: string;
-  position: Position;
+  label?: string;
   src: string;
+  type: string;
 }
 
+type iWindowable = iFolder | iEmbed;

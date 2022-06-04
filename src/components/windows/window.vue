@@ -2,7 +2,7 @@
   <main class="Window absolute flex flex-col shadow-xl"
     :style="{ left, top }"
     :class="{
-      'w-screen h-screen': fullscreen
+      'w-screen h-screen': data.fullscreen
     }"
     @click="clickedWindow"
   >
@@ -27,8 +27,8 @@
     <section
       class="bg-white border border-2 border-blue-300 overflow-hidden"
       :class="{
-        'w-[425px] h-[425px]': !fullscreen,
-        'w-full h-full': fullscreen
+        'w-[425px] h-[425px]': !data.fullscreen,
+        'w-full h-full': data.fullscreen
       }"
     >
       <slot />
@@ -38,16 +38,10 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import move from "../directives/move";
-import WindowData from "../models/WindowData";
-import File from "./file.vue";
-import {closeWindow, focusWindow} from "../store/app";
-import FolderData from "../models/FolderData";
-import ImageData from "../models/ImageData";
-
-export function isFolder(obj:any): obj is WindowData {
-  return typeof obj.id === 'string' && typeof obj.label === 'string' && Array.isArray(obj.items);
-}
+import move from "../../directives/move";
+import WindowData from "../../models/WindowData";
+import File from "../file.vue";
+import {closeWindow, focusWindow} from "../../store/app";
 
 export default defineComponent({
   name: 'Window',
@@ -55,14 +49,13 @@ export default defineComponent({
   components: { File },
   props: {
     data: {
-      type: [WindowData, FolderData, ImageData],
+      type: WindowData,
       required: true
     }
   },
   data() {
     return {
       movable: false,
-      fullscreen: false,
       oldPosition: null as null | Position
     }
   },
@@ -85,9 +78,9 @@ export default defineComponent({
       closeWindow(this.data);
     },
     toggleFullscreen() {
-      this.fullscreen = !this.fullscreen;
+      this.data.fullscreen = !this.data.fullscreen;
 
-      if(this.fullscreen) {
+      if(this.data.fullscreen) {
         this.oldPosition = { ...this.data.position };
         this.data.position.left = 0;
         this.data.position.top = 0;

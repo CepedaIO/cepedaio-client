@@ -11,5 +11,7 @@ export default class FileData {
 
   activated!: (data:this) => void;
 
-  constructor(data: PartialBy<FileData, 'position'>) { Object.assign(this, data) }
+  constructor(data: PartialBy<FileData, 'position'>) {
+    Object.assign(this, data)
+  }
 }

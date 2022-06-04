@@ -11,8 +11,8 @@
       <span class="text-green-500">Double click</span> to open it
     </section>
 
-    <section class="flex flex-row gap-10">
-      <section class="border-2 border-indigo-200 p-3 grow">
+    <section class="flex flex-row flex-wrap gap-10">
+      <section class="border-2 border-indigo-200 p-3 grow min-w-[350px]">
         <h2 class="text-indigo-300 mb-1">
           Front End Skills
         </h2>
@@ -25,7 +25,7 @@
         </div>
       </section>
 
-      <section class="border-2 border-indigo-200 p-3 grow">
+      <section class="border-2 border-indigo-200 p-3 grow min-w-[350px]">
         <h2 class="text-indigo-300 mb-1">
           Back End Skills
         </h2>
@@ -38,7 +38,7 @@
         </div>
       </section>
 
-      <section class="border-2 border-indigo-200 p-3 grow">
+      <section class="border-2 border-indigo-200 p-3 grow min-w-[350px]">
         <h2 class="text-indigo-300 mb-1">
           Other Skills
         </h2>
@@ -57,20 +57,7 @@
       <File v-for="file in files" :key="file.id" :data="file" />
       <Folder v-for="folder in folders" :key="folder.id" :data="folder" />
 
-      <Window v-for="window in folderWindows" :key="window.id" :data="window" :style="{ 'z-index': 10 + window.index }">
-        <div class="relative w-full h-full gap-x-5 flex flex-row flex-wrap p-2" v-if="window.type === 'FolderData'">
-          <File v-for="file in window.files" :key="file.id" :data="file" :window="window"/>
-          <Folder v-for="folder in window.folders" :key="folder.id" :data="folder" />
-        </div>
-      </Window>
-
-      <Window v-for="window in imageWindows" :key="window.id" :data="window" :style="{ 'z-index': 10 + window.index }">
-        <img class="relative w-auto h-full m-auto" v-if="window.type === 'ImageData'" :src="window.src" />
-      </Window>
-
-      <Window v-for="window in embedWindows" :key="window.id" :data="window" :style="{ 'z-index': 10 + window.index }">
-        <embed :src="window.src" width="100%" height="100%" :type="window.mime">
-      </Window>
+      <WindowProvider v-for="[window, content, index] in windows" :window="window" :content="content" :index="index" />
     </section>
   </main>
 </template>
@@ -79,17 +66,19 @@
 import { defineComponent } from "vue"
 import File from "../components/file.vue";
 import Folder from "../components/folder.vue";
-import Window from "../components/window.vue";
+import Window from "../components/windows/window.vue";
 import ProgressBar from "../components/progress-bar.vue";
 import FileData from "../models/FileData";
 import FolderData from "../models/FolderData";
-import ImageData from "../models/ImageData";
-import {getWindows, openWindow, state} from "../store/app";
 import EmbedData from "../models/EmbedData";
+import {getAllWindows, openWindow, state} from "../store/app";
+import FolderWindow from "../components/windows/folder-window.vue";
+import EmbedWindow from "../components/windows/embed-window.vue";
+import WindowProvider from "../components/windows/window-provider.vue";
 
 export default defineComponent({
     name: "Home",
-    components: { File, Folder, Window, ProgressBar },
+    components: {WindowProvider, EmbedWindow, FolderWindow, File, Folder, Window, ProgressBar },
     data() {
         return {
           frontEndBars: [
@@ -131,8 +120,7 @@ export default defineComponent({
               activated: () => openWindow(new EmbedData({
                 id: 'ResumePDF',
                 label: 'PDF',
-                src: '/Resume.pdf',
-                mime: 'application/pdf'
+                src: '/Resume.pdf'
               }))
             }),
             new FileData({
@@ -158,7 +146,7 @@ export default defineComponent({
                 id: `luna-${index}`,
                 image: photo,
                 activated() {
-                  openWindow(new ImageData({
+                  openWindow(new EmbedData({
                     id: `luna-${index}`,
                     src: photo
                   }));
@@ -247,9 +235,7 @@ export default defineComponent({
         }
     },
     computed: {
-      folderWindows: () => getWindows.value.filter(window => window.type === "FolderData") as FolderData[],
-      imageWindows: () => getWindows.value.filter(window => window.type === "ImageData") as ImageData[],
-      embedWindows: () => getWindows.value.filter(window => window.type === "EmbedData") as EmbedData[]
+      windows: () => getAllWindows.value
     }
 });
 </script>

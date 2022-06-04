@@ -1,18 +1,10 @@
-type ConstructorOptions = Omit<PartialBy<EmbedData, 'position' | 'index'>, 'type'>
-
-export default class EmbedData implements iWindow {
-  type = "EmbedData";
+export default class EmbedData implements iEmbed {
   id!: string;
   label?: string;
-  index = 0;
-  position: Position = {
-    left: 0,
-    top: 0
-  };
-  mime!:string;
   src!: string;
-  
-  constructor(data: ConstructorOptions) {
+  type!: string;
+
+  constructor(data: iEmbed) {
     Object.assign(this, data);
   }
 }

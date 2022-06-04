@@ -44,7 +44,7 @@ export default defineComponent({
       type: FileData,
       required: true
     },
-    window: [WindowData, FolderData]
+    window: WindowData
   },
   computed: {
     left() { return `${this.data.position.left}px`; },

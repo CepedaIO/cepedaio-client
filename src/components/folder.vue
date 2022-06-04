@@ -7,7 +7,7 @@ import { defineComponent } from "vue";
 import FileData from "../models/FileData";
 import FolderData from "../models/FolderData";
 import File from "./file.vue";
-import Window from "./window.vue";
+import Window from "./windows/window.vue";
 import {openWindow} from "../store/app";
 
 export default defineComponent({

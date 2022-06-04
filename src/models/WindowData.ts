@@ -1,15 +1,13 @@
-type ConstructorOptions = Omit<PartialBy<WindowData, 'position'>, 'type'>
-
 export default class WindowData implements iWindow {
-  type = "WindowData";
   id!: string;
   label?: string;
+  fullscreen: boolean = false;
   position: Position = {
     left: 0,
     top: 0
   };
 
-  constructor(data: ConstructorOptions) {
+  constructor(data: PartialBy<iWindow, 'position'>) {
     Object.assign(this, data);
   }
 }
