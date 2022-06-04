@@ -27,8 +27,9 @@
 import { defineComponent } from "vue";
 import move from "../directives/move";
 import FileData from "../models/FileData";
-import {register, state} from "../store/app";
+import {state} from "../store/app";
 import WindowData from "../models/WindowData";
+import FolderData from "../models/FolderData";
 
 export default defineComponent({
   directives: { move },
@@ -37,15 +38,12 @@ export default defineComponent({
       type: FileData,
       required: true
     },
-    window: WindowData
+    window: [WindowData, FolderData]
   },
   computed: {
     left() { return `${this.data.position.left}px`; },
     top() { return `${this.data.position.top}px`; },
     active() { return state.active && state.active === this.$el; }
-  },
-  created() {
-    register(this.data);
   },
   mounted() {
     this.setPosition(this.$el.getBoundingClientRect());

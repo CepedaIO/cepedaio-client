@@ -6,7 +6,6 @@
 import { defineComponent } from "vue";
 import FileData from "../models/FileData";
 import FolderData from "../models/FolderData";
-import WindowData from "../models/WindowData";
 import File from "./file.vue";
 import Window from "./window.vue";
 import {openWindow} from "../store/app";
@@ -22,18 +21,12 @@ export default defineComponent({
   },
   data() {
     return {
-      windowData: new WindowData({
-        id: this.data.id,
-        label: this.data.label || this.data.id,
-        files: this.data.files,
-        folders: this.data.folders
-      }),
       fileData: new FileData({
         id: this.data.id,
         label: this.data.label,
         icon: 'fas fa-folder',
         activated: () => {
-          return openWindow(this.windowData);
+          return openWindow(this.data);
         }
       })
     }

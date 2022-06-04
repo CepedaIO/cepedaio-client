@@ -1,10 +1,19 @@
 import FileData from "./FileData";
 
-export default class FolderData {
+type ConstructorOptions = Omit<PartialBy<FolderData, 'position'>, 'type'>
+
+export default class FolderData implements iWindow {
+  type = "FolderData";
   id!: string;
-  label?: string;
+  label!: string;
+  position: Position = {
+    left: 0,
+    top: 0
+  };
   files?: Array<FileData>;
   folders?: Array<FolderData>;
 
-  constructor(data: FolderData) { Object.assign(this, data) }
+  constructor(data: ConstructorOptions) {
+    Object.assign(this, data);
+  }
 }

@@ -1,9 +1,10 @@
 <template>
-  <main class="absolute flex flex-col"
+  <main class="Window absolute flex flex-col"
     :style="{ left, top }"
     :class="{
-      'w-full h-full': fullscreen
+      'w-screen h-screen': fullscreen
     }"
+    @click="clickedWindow"
   >
     <header class="pl-5 pr-2 py-2 flex justify-between items-center z-10 w-full" v-move="setPosition" @dblclick="toggleFullscreen">
       <span>
@@ -17,7 +18,7 @@
         <li class="py-1 px-2" @click="toggleFullscreen">
           <i class="fal fa-square" />
         </li>
-        <li class="py-1 px-2" @click="onClose">
+        <li class="py-1 px-2" @click.stop="onClose">
           <i class="fal fa-times fa-lg" />
         </li>
       </ul>
@@ -40,7 +41,9 @@ import { defineComponent } from "vue";
 import move from "../directives/move";
 import WindowData from "../models/WindowData";
 import File from "./file.vue";
-import {closeWindow, register} from "../store/app";
+import {closeWindow, focusWindow} from "../store/app";
+import FolderData from "../models/FolderData";
+import ImageData from "../models/ImageData";
 
 export function isFolder(obj:any): obj is WindowData {
   return typeof obj.id === 'string' && typeof obj.label === 'string' && Array.isArray(obj.items);
@@ -52,7 +55,7 @@ export default defineComponent({
   components: { File },
   props: {
     data: {
-      type: WindowData,
+      type: [WindowData, FolderData, ImageData],
       required: true
     }
   },
@@ -71,6 +74,9 @@ export default defineComponent({
     this.setPosition(this.$el.getBoundingClientRect());
   },
   methods: {
+    clickedWindow() {
+      focusWindow(this.data);
+    },
     setPosition({ left, top }: Position) {
       this.data.position.left = left;
       this.data.position.top = top;

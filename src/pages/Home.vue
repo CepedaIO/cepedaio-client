@@ -51,11 +51,13 @@
       <File v-for="file in files" :key="file.id" :data="file" />
       <Folder v-for="folder in folders" :key="folder.id" :data="folder" />
 
-      <Window v-for="window in windows" :key="window.id" :data="window">
-        <div class="relative w-full h-full gap-5 flex flex-row p-2">
+      <Window v-for="(window, index) in windows" :key="window.id" :data="window" :style="{ 'z-index': 10 + index }">
+        <div class="relative w-full h-full gap-5 flex flex-row p-2" v-if="window.type === 'FolderData'">
           <File v-for="file in window.files" :key="file.id" :data="file" :window="window"/>
           <Folder v-for="folder in window.folders" :key="folder.id" :data="folder" />
         </div>
+
+        <img class="relative w-auto h-full m-auto" v-if="window.type === 'ImageData'" :src="window.src" />
       </Window>
     </section>
   </main>
@@ -65,15 +67,16 @@
 import { defineComponent } from "vue"
 import File from "../components/file.vue";
 import Folder from "../components/folder.vue";
-import ProgressBar from "../components/progress-bar.vue";
 import Window from "../components/window.vue";
+import ProgressBar from "../components/progress-bar.vue";
 import FileData from "../models/FileData";
 import FolderData from "../models/FolderData";
-import {state} from "../store/app";
+import ImageData from "../models/ImageData";
+import {openWindow, state} from "../store/app";
 
 export default defineComponent({
     name: "Home",
-    components: { File, Folder, ProgressBar, Window },
+    components: { File, Folder, Window, ProgressBar },
     data() {
         return {
           frontEndBars: [
@@ -122,7 +125,11 @@ export default defineComponent({
                 label: `luna-${index}`,
                 image: photo,
                 activated() {
-                  console.log('open image');
+                  openWindow(new ImageData({
+                    id: `luna-${index}`,
+                    label: `luna-${index}`,
+                    src: photo
+                  }));
                 }
               }))
             })
