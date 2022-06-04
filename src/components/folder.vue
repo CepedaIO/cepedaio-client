@@ -2,7 +2,7 @@
   <File :data="fileData" />
   <Window v-if="shouldRender" :data="windowData">
     <div class="relative w-full h-full gap-5 flex flex-row p-2">
-      <File v-for="file in data.files" :key="file.id" :data="file" />
+      <File v-for="file in data.files" :key="file.id" :data="file" :window="data.id"/>
       <Folder v-for="folder in data.folders" :key="folder.id" :data="folder" />
     </div>
   </Window>

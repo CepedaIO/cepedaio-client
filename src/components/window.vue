@@ -6,7 +6,7 @@
     }"
     :style="{ left, top }"
   >
-    <header class="pl-5 pr-2 py-2 flex justify-between items-center box-border z-10" v-move="onMove" @dblclick="toggleFullscreen">
+    <header class="pl-5 pr-2 py-2 flex justify-between items-center box-border z-10" v-move="setPosition" @dblclick="toggleFullscreen">
       <span>
         {{ data.label }}
       </span>
@@ -63,18 +63,16 @@ export default defineComponent({
     top() { return `${this.data.position.top}px`; },
     hidden() { return !desktopStore.state.opened.includes(this.data.id); },
   },
-  mounted() {
-    const { left, top } = this.$el.getBoundingClientRect();
-
-    this.data.position.left = left;
-    this.data.position.top = top;
-
+  created() {
     desktopStore.register(this.data);
   },
+  mounted() {
+    this.setPosition(this.$el.getBoundingClientRect());
+  },
   methods: {
-    onMove(options:any) {
-      this.data.position.left = options.left;
-      this.data.position.top = options.top;
+    setPosition({ left, top }: Position) {
+      this.data.position.left = left;
+      this.data.position.top = top;
     },
     onClose() {
       desktopStore.closeWindow(this.data.id);

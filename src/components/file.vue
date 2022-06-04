@@ -6,7 +6,7 @@
       active
     }"
     :style="{ left, top }"
-    v-move="onMove"
+    v-move="setPosition"
     @mousedown="onMouseDown"
     @dblclick="data.activated(data)"
     @click.stop="() => {}"
@@ -43,16 +43,12 @@ export default defineComponent({
     top() { return `${this.data.position.top}px`; },
     active() { return desktopStore.state.active && desktopStore.state.active === this.$el; }
   },
-  mounted() {
-    const { left, top } = this.$el.getBoundingClientRect();
-    this.data.position.left = left;
-
-    if(this.window) {
-      this.data.position.top = top;
-    }
-
-    this.movable = true;
+  created() {
     desktopStore.register(this.data);
+  },
+  mounted() {
+    this.setPosition(this.$el.getBoundingClientRect());
+    this.movable = true;
   },
   data() {
     return {
@@ -63,7 +59,7 @@ export default defineComponent({
     onMouseDown() {
       desktopStore.state.active = this.$el;
     },
-    onMove({ left, top }: { left:number, top:number }) {
+    setPosition({ top, left }: Position) {
       if(this.window) {
         const window = desktopStore.getWindow(this.window)!;
 
