@@ -1,24 +1,18 @@
 <template>
-  <main @click="onClick">
+  <main @click="onClick" class="p-5">
     <router-view />
+    <desktop />
   </main>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { state } from "./store/app";
+import { state} from "./store/app";
+import Desktop from "./components/desktop.vue";
 
 export default defineComponent({
   name: "App",
-  data: () => {
-    return {
-      navigation: [
-        { icon: "fa-home", url: "/" },
-        { icon: "fa-toolbox", url: "/tools" },
-        { icon: "fa-blog", url: "/blog" },
-      ],
-    };
-  },
+  components: { Desktop },
   methods: {
     onClick() {
       state.active = null;

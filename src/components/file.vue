@@ -52,7 +52,11 @@ export default defineComponent({
     active() { return state.active && state.active === this.$el; }
   },
   mounted() {
-    this.setPosition(this.$el.getBoundingClientRect());
+    const bounds = this.$el.getBoundingClientRect();
+    this.setPosition({
+      left: bounds.left + 135,
+      top: bounds.top - 10
+    });
     this.movable = true;
   },
   data() {
