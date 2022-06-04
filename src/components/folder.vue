@@ -1,8 +1,8 @@
 <template>
-  <main class="absolute border border-2 border-blue-300 box-border overflow-hidden"
+  <main class="absolute overflow-hidden flex flex-col"
     :class="{ 
       hidden,
-      'w-1/2 h-1/2': !fullscreen,
+      'min-w-[425px] min-h-[425px]': !fullscreen,
       'w-full h-full': fullscreen
     }"
     :style="{ left, top }"
@@ -25,7 +25,7 @@
       </ul>
     </header>
 
-    <section class="h-full bg-white">
+    <section class="grow bg-white border border-2 border-blue-300 box-content">
 
     </section>
   </main>
