@@ -1,6 +1,6 @@
 <template>
   <main class="relative p-5">
-    <h1 class="text-center mb-8">Welcome to AJ's Desktop</h1>
+    <h1 class="mb-8">AJ's Desktop</h1>
 
     <section class="mb-5">
       Hello, my name's Alfred Cepeda. I'm a software engineer, gamer and sci fi enthusiast
@@ -53,7 +53,7 @@
     </section>
 
 
-    <section class="absolute inset-0 z-10 flex flex-row p-2">
+    <section class="absolute inset-0 z-10 flex flex-row p-2 pl-[165px]">
       <File v-for="file in files" :key="file.id" :data="file" />
       <Folder v-for="folder in folders" :key="folder.id" :data="folder" />
 
@@ -66,6 +66,10 @@
 
       <Window v-for="window in imageWindows" :key="window.id" :data="window" :style="{ 'z-index': 10 + window.index }">
         <img class="relative w-auto h-full m-auto" v-if="window.type === 'ImageData'" :src="window.src" />
+      </Window>
+
+      <Window v-for="window in embedWindows" :key="window.id" :data="window" :style="{ 'z-index': 10 + window.index }">
+        <embed :src="window.src" width="100%" height="100%" :type="window.mime">
       </Window>
     </section>
   </main>
@@ -81,6 +85,7 @@ import FileData from "../models/FileData";
 import FolderData from "../models/FolderData";
 import ImageData from "../models/ImageData";
 import {getWindows, openWindow, state} from "../store/app";
+import EmbedData from "../models/EmbedData";
 
 export default defineComponent({
     name: "Home",
@@ -120,6 +125,16 @@ export default defineComponent({
             { label: 'iOS/Swift', percent: 65 },
           ],
           files: [
+            new FileData({
+              id: 'Resume',
+              icon: 'fas fa-file-pdf',
+              activated: () => openWindow(new EmbedData({
+                id: 'ResumePDF',
+                label: 'PDF',
+                src: '/Resume.pdf',
+                mime: 'application/pdf'
+              }))
+            }),
             new FileData({
               id: 'Github',
               icon:'fab fa-github',
@@ -233,7 +248,8 @@ export default defineComponent({
     },
     computed: {
       folderWindows: () => getWindows.value.filter(window => window.type === "FolderData") as FolderData[],
-      imageWindows: () => getWindows.value.filter(window => window.type === "ImageData") as ImageData[]
+      imageWindows: () => getWindows.value.filter(window => window.type === "ImageData") as ImageData[],
+      embedWindows: () => getWindows.value.filter(window => window.type === "EmbedData") as EmbedData[]
     }
 });
 </script>
