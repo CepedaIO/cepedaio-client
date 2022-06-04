@@ -1,24 +1,12 @@
 <template>
-  <main class="flex flex-col">
+  <main class="flex flex-col w-screen h-screen" @click="onClick">
     <router-view class='container mx-auto'></router-view>
-
-    <nav class="flex flex-row justify-around fixed left-0 right-0 bottom-0 bg-white shadow-2xl">
-      <router-link
-        v-for="button in navigation"
-        :key="button.url"
-        :to="button.url"
-        class="flex-grow flex"
-      >
-        <div class="py-5 mx-auto">
-          <i class="fas fa-home fa-3x" :class="[button.icon]"></i>
-        </div>
-      </router-link>
-    </nav>
   </main>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { iconStore } from "./store/icons";
 
 export default defineComponent({
   name: "App",
@@ -31,6 +19,11 @@ export default defineComponent({
       ],
     };
   },
+  methods: {
+    onClick() {
+      iconStore.active = null;
+    }
+  }
 });
 </script>
 
