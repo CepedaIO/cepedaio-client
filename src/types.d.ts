@@ -26,7 +26,7 @@ interface iFile {
 interface iFolder {
   id: string;
   label?: string;
-  files?: Array<iFile | iContribution>;
+  files?: Array<iFile>;
   folders?: Array<iFolder>;
 }
 
