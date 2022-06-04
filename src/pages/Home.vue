@@ -1,5 +1,16 @@
 <template>
   <main class="Home">
+    <section class>
+      <div v-for="info in infos" :key="info[0]">
+        <label>{{ info[0] }}</label>
+        <span>{{ info[1] }}</span>
+      </div>
+
+      <div class="mt-4">
+        <label>Accepting Work?</label>
+        <span>Yes</span>
+      </div>
+    </section>
     <section class="flex flex-row flex-wrap gap-10 hidden">
       <section class="border-2 border-indigo-200 p-3 grow min-w-[350px]">
         <h2 class="text-indigo-300 mb-1">
@@ -57,6 +68,15 @@ export default defineComponent({
     components: {ProgressBar},
     data() {
         return {
+          infos: [
+            ['Name:', 'Alfred Cepeda'],
+            ['Age:', 33],
+            ['Degree:', 'Bachelor\'s of Science'],
+            ['School:', 'University of Central Florida'],
+            ['Occupation:', 'Software Engineer'],
+            ['Specialization', 'Full-stack Web Development'],
+            ['Skill Level:', 'Senior/Expert']
+          ],
           frontEndBars: [
             { label: 'Vue', percent: 85 },
             { label: 'Angular', percent: 70 },
