@@ -1,8 +1,9 @@
 <template>
-  <main style="background: blue">
-    <Icon v-for="icon in icons" :key="icon.label" :self="icon" />
-
-    <Folder name="projects" />
+  <main class="relative w-full h-full">
+    <template v-for="(item, index) in items" :key="index">
+      <Icon :self="item.icon" class="z-0" />
+      <Folder v-if="item.folder" :name="item.folder" class="z-10" />
+    </template>
   </main>
 </template>
 
@@ -18,17 +19,21 @@ export default defineComponent({
     components: { Icon, Folder },
     data() {
         return {
-          icons: [
-            new IconData({
-              class:'fa fa-folder',
-              label: 'Projects',
-              activated: () => folderStore.openFolder('projects')
-            }),
-            new IconData({
-              class:'fas fa-home',
-              label:'Home',
-              activated: () => console.log('activated home')
-            })
+          items: [
+            {
+              folder: 'projects',
+              icon: new IconData({
+                class:'fa fa-folder',
+                label: 'Projects',
+                activated() { return folderStore.openFolder('projects') }
+              })
+            }, {
+              icon: new IconData({
+                class:'fas fa-home',
+                label:'Home',
+                activated: () => console.log('activated home')
+              })
+            }
           ],
             remainingPhotos: [] as string[],
             currentPhoto: "",

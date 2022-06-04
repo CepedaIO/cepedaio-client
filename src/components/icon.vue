@@ -1,5 +1,5 @@
 <template>
-  <movable @dblclick="self.activated">
+  <movable @dblclick="self.activated(self)">
     <div class="px-2">
       <i class="fa-2x" :class="self.class" />
     </div>
@@ -17,7 +17,7 @@ import movable from "./movable.vue";
 export class IconData {
   class!: string;
   label!: string;
-  activated!: () => void;
+  activated!: (self:this) => void;
 
   constructor(self: IconData) { Object.assign(this, self) }
 }
@@ -25,7 +25,10 @@ export class IconData {
 export default defineComponent({
   components: { movable },
   props: {
-    self: IconData
+    self: {
+      type: IconData,
+      required: true
+    }
   }
 });
 </script>

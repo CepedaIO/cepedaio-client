@@ -1,9 +1,13 @@
 <template>
-  <main class="absolute w-1/2 border border-2 border-blue-300 box-border"
-    :class="{ hidden }"
+  <main class="absolute border border-2 border-blue-300 box-border overflow-hidden"
+    :class="{ 
+      hidden,
+      'w-1/2 h-1/2': !fullscreen,
+      'w-full h-full': fullscreen
+    }"
     :style="{ left, top }"
   >
-    <header class="pl-5 pr-2 py-2 flex justify-between items-center box-border" v-move="onMove">
+    <header class="pl-5 pr-2 py-2 flex justify-between items-center box-border" v-move="onMove" @dblclick="toggleFullscreen">
       <span>
         Projects
       </span>
@@ -12,7 +16,7 @@
         <li class="py-1 px-2">
           <i class="fas fa-horizontal-rule fa-sm" />
         </li>
-        <li class="py-1 px-2">
+        <li class="py-1 px-2" @click="toggleFullscreen">
           <i class="fal fa-square" />
         </li>
         <li class="py-1 px-2" @click="onClose">
@@ -21,7 +25,7 @@
       </ul>
     </header>
 
-    <section class="min-h-[350px] bg-white">
+    <section class="h-full bg-white">
 
     </section>
   </main>
@@ -44,8 +48,11 @@ export default defineComponent({
   data() {
     return {
       movable: false,
+      fullscreen: false,
       _left: 0,
-      _top: 0
+      _top: 0,
+      oldLeft: 0,
+      oldTop: 0
     }
   },
   computed: {
@@ -55,6 +62,7 @@ export default defineComponent({
   },
   mounted() {
     const { left, top } = this.$el.getBoundingClientRect();
+
     this._left = left; 
     this._top = top;
   },
@@ -65,6 +73,19 @@ export default defineComponent({
     },
     onClose() {
       folderStore.closeFolder(this.name);
+    },
+    toggleFullscreen() {
+      this.fullscreen = !this.fullscreen;
+
+      if(this.fullscreen) {
+        this.oldLeft = this._left;
+        this.oldTop = this._top;
+        this._left = 0;
+        this._top = 0;
+      } else {
+        this._left = this.oldLeft;
+        this._top = this.oldTop;
+      }
     }
   }
 });
