@@ -36,25 +36,27 @@ export default defineComponent({
       type: FileData,
       required: true
     },
-    parent: String
+    window: String
   },
   computed: {
-    left() { return `${this._left}px`; },
-    top() { return `${this._top}px`; },
+    left() { return `${this.data.position.left}px`; },
+    top() { return `${this.data.position.top}px`; },
     active() { return desktopStore.state.active && desktopStore.state.active === this.$el; }
   },
   mounted() {
     const { left, top } = this.$el.getBoundingClientRect();
-    this._left = left;
-    this._top = top;
+    this.data.position.left = left;
+
+    if(this.window) {
+      this.data.position.top = top;
+    }
+
     this.movable = true;
     desktopStore.register(this.data);
   },
   data() {
     return {
-      movable: false,
-      _left: 0,
-      _top: 0
+      movable: false
     }
   },
   methods: {
@@ -62,14 +64,14 @@ export default defineComponent({
       desktopStore.state.active = this.$el;
     },
     onMove({ left, top }: { left:number, top:number }) {
-      if(this.parent) {
-        const folder = desktopStore.getFolder(this.parent)!;
+      if(this.window) {
+        const window = desktopStore.getWindow(this.window)!;
 
-        this._left = left - folder.left;
-        this._top = top - folder.top - 48;
+        this.data.position.left = left - window.position.left;
+        this.data.position.top = top - window.position.top - 48;
       } else {
-        this._left = left;
-        this._top = top + window.scrollY!;
+        this.data.position.left = left;
+        this.data.position.top = top + window.scrollY!;
       }
     }
   }

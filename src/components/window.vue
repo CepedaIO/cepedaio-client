@@ -1,8 +1,7 @@
 <template>
-  <main class="absolute overflow-hidden flex flex-col p-5"
+  <main class="absolute"
     :class="{
-      hidden,
-      'min-w-[425px] min-h-[425px]': !fullscreen,
+      'w-[425px] h-[425px]': !fullscreen,
       'w-full h-full': fullscreen
     }"
     :style="{ left, top }"
@@ -25,7 +24,7 @@
       </ul>
     </header>
 
-    <section class="grow bg-white border border-2 border-blue-300 box-content relative overflow-hidden">
+    <section class="bg-white border border-2 border-blue-300 w-full h-full box-content overflow-hidden">
       <slot />
     </section>
   </main>
@@ -56,27 +55,26 @@ export default defineComponent({
     return {
       movable: false,
       fullscreen: false,
-      oldLeft: 0,
-      oldTop: 0
+      oldPosition: null as null | Position
     }
   },
   computed: {
-    left() { return `${this.data.left}px`; },
-    top() { return `${this.data.top}px`; },
+    left() { return `${this.data.position.left}px`; },
+    top() { return `${this.data.position.top}px`; },
     hidden() { return !desktopStore.state.opened.includes(this.data.id); },
   },
   mounted() {
     const { left, top } = this.$el.getBoundingClientRect();
 
-    this.data.left = left;
-    this.data.top = top;
+    this.data.position.left = left;
+    this.data.position.top = top;
 
     desktopStore.register(this.data);
   },
   methods: {
     onMove(options:any) {
-      this.data.left = options.left;
-      this.data.top = options.top;
+      this.data.position.left = options.left;
+      this.data.position.top = options.top;
     },
     onClose() {
       desktopStore.closeWindow(this.data.id);
@@ -85,13 +83,11 @@ export default defineComponent({
       this.fullscreen = !this.fullscreen;
 
       if(this.fullscreen) {
-        this.oldLeft = this.data.left;
-        this.oldTop = this.data.top;
-        this.data.left = 0;
-        this.data.top = 0;
+        this.oldPosition = { ...this.data.position };
+        this.data.position.left = 0;
+        this.data.position.top = 0;
       } else {
-        this.data.left = this.oldLeft;
-        this.data.top = this.oldTop;
+        this.data.position = this.oldPosition!;
       }
     }
   }

@@ -47,8 +47,7 @@
       </div>
     </section>
 
-
-    <section class="absolute inset-0 z-10">
+    <section class="absolute inset-0 z-10 flex flex-row gap-3 p-2">
       <File v-for="file in files" :key="file.id" :data="file" />
       <Folder v-for="folder in folders" :key="folder.id" :data="folder" />
     </section>
@@ -106,28 +105,23 @@ export default defineComponent({
             new FolderData({
               id: 'picture',
               label: 'Pictures',
-              window: new WindowData({
-                id: 'pictures',
-                label: 'Pictures',
-              }),
               files: [
-                new FileData({
-                  id: 'luna',
-                  image: "https://storage.googleapis.com/cepedaio.appspot.com/luna/20210717_213807.jpg",
-                  label:'Home',
-                  activated: () => console.log('activated home')
-                })
-              ]
-            }) 
+                "https://storage.googleapis.com/cepedaio.appspot.com/luna/20210717_213807.jpg",
+                "https://storage.googleapis.com/cepedaio.appspot.com/luna/20210801_125503.jpg",
+                "https://storage.googleapis.com/cepedaio.appspot.com/luna/20210810_134007.jpg",
+                "https://storage.googleapis.com/cepedaio.appspot.com/luna/20210813_165559.jpg"
+              ].map((photo, index) => new FileData({
+                id: `luna-${index}`,
+                label: `luna-${index}`,
+                image: photo,
+                activated() {
+                  console.log('open image');
+                }
+              }))
+            })
           ],
           remainingPhotos: [] as string[],
           currentPhoto: "",
-          photos: [
-              "https://storage.googleapis.com/cepedaio.appspot.com/luna/20210717_213807.jpg",
-              "https://storage.googleapis.com/cepedaio.appspot.com/luna/20210801_125503.jpg",
-              "https://storage.googleapis.com/cepedaio.appspot.com/luna/20210810_134007.jpg",
-              "https://storage.googleapis.com/cepedaio.appspot.com/luna/20210813_165559.jpg"
-          ],
         }
     },
     mounted() {
@@ -136,9 +130,9 @@ export default defineComponent({
     },
     methods: {
         pickPhoto() {
-            if (this.remainingPhotos.length === 0)
+            /*if (this.remainingPhotos.length === 0)
                 this.remainingPhotos = shuffle(this.photos);
-            this.currentPhoto = this.remainingPhotos.pop() as string;
+            this.currentPhoto = this.remainingPhotos.pop() as string;*/
         }
     }
 });

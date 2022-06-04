@@ -8,7 +8,12 @@ export default class FileData {
   icon?: string;
   image?: string;
   label?: string;
+  position: Position = {
+    top: 0,
+    left: 0
+  };
+
   activated!: (data:this) => void;
 
-  constructor(data: FileData) { Object.assign(this, data) }
+  constructor(data: PartialBy<FileData, 'position'>) { Object.assign(this, data) }
 }
