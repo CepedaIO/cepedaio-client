@@ -3,7 +3,7 @@
     class="File inline-flex flex-col items-center cursor-default py-1 box-border"
     :class="{
       'absolute': movable,
-      active
+      'bg-selected border-2 border-white': active
     }"
     :style="{ left, top }"
     v-move="setPosition"
@@ -13,10 +13,10 @@
   >
     <section class="min-h-[55px] flex flex-col items-center justify-around">
       <div class="px-2 m-auto" v-if="data.icon">
-        <i class="fa-2x" :class="data.icon" />
+        <i class="fa-3x" :class="data.icon" />
       </div>
 
-      <img v-else-if="data.image" :src="data.image" class="max-w-[50px] m-auto" />
+      <img v-else-if="data.image" :src="data.image" :alt="data.label || data.icon" class="max-w-[50px] m-auto" />
 
       <div class="px-2 m-auto font-bold" v-else-if="data.iconLabel">
         {{ data.iconLabel }}
@@ -33,9 +33,8 @@
 import { defineComponent } from "vue";
 import move from "../directives/move";
 import FileData from "../models/FileData";
-import {state} from "../store/app";
+import {isActive, setActive} from "../store/app";
 import WindowData from "../models/WindowData";
-import FolderData from "../models/FolderData";
 
 export default defineComponent({
   directives: { move },
@@ -49,7 +48,7 @@ export default defineComponent({
   computed: {
     left() { return `${this.data.position.left}px`; },
     top() { return `${this.data.position.top}px`; },
-    active() { return state.active && state.active === this.$el; }
+    active() { return isActive(this.$el); }
   },
   mounted() {
     const bounds = this.$el.getBoundingClientRect();
@@ -67,7 +66,7 @@ export default defineComponent({
   },
   methods: {
     onMouseDown() {
-      state.active = this.$el;
+      setActive(this.$el);
     },
     setPosition({ top, left }: Position) {
       if(this.window) {
@@ -81,17 +80,3 @@ export default defineComponent({
   }
 });
 </script>
-
-<style scoped>
-  .File {
-    border: 2px solid transparent;
-  }
-
-  .active {
-    background-color: #D8EAF9;
-    border: 2px solid #DEEDF9;
-  }
-  .active:hover {
-    background-color: #C4E0F6
-  }
-</style>

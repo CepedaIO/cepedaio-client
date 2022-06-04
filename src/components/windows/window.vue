@@ -1,31 +1,30 @@
 <template>
-  <main class="Window absolute flex flex-col shadow-xl"
+  <main class="Window absolute flex flex-col shadow-xl rounded-2xl overflow-hidden border border-2 border-white bg-primary"
     :style="{ left, top, 'z-index': zIndex }"
     :class="{
       'w-screen h-screen': data.fullscreen
     }"
     @click="clickedWindow"
   >
-    <header class="pl-5 pr-2 py-2 flex justify-between items-center z-10 w-full" v-move="setPosition" @dblclick="toggleFullscreen">
-      <span>
+    <header class="pl-5 pr-2 py-2 flex items-center z-10 w-full" v-move="setPosition" @dblclick="toggleFullscreen">
+      <div class="flex-grow text-center">
         {{ data.label || data.id }}
-      </span>
+      </div>
 
-      <ul class="flex">
+      <ul class="flex ml-auto absolute right-2">
+        <li class="py-1 px-1" @click="toggleFullscreen">
+          <span class="dot bg-green-500" />
+        </li>
         <li class="py-1 px-2">
-          <i class="fas fa-horizontal-rule fa-sm" />
+          <span class="dot bg-yellow-500" />
         </li>
-        <li class="py-1 px-2" @click="toggleFullscreen">
-          <i class="fal fa-square" />
-        </li>
-        <li class="py-1 px-2" @click.stop="onClose">
-          <i class="fal fa-times fa-lg" />
+        <li class="py-1 px-1" @click.stop="onClose">
+          <span class="dot bg-red-500" />
         </li>
       </ul>
     </header>
 
     <section
-      class="bg-white border border-2 border-blue-300 overflow-hidden"
       :class="{
         'w-[425px] h-[425px]': !data.fullscreen,
         'w-full h-full': data.fullscreen
@@ -96,7 +95,6 @@ export default defineComponent({
 <style scoped>
   header {
     color: white;
-    background-color: #0078D7;
     margin-left: -1px;
     margin-right: -2px;
     margin-top: -1px;

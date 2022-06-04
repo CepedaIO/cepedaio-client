@@ -36,3 +36,11 @@ export function openWindow(content: iWindowable) {
 export function closeWindow(window:iWindow) {
   state.windows = state.windows.filter(([opened]) => opened !== window);
 }
+
+export function isActive(el:HTMLElement): boolean {
+  return !!state.active && state.active === el;
+}
+
+export function setActive(el:HTMLElement | null): void {
+  state.active = el;
+}

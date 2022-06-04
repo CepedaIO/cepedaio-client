@@ -1,5 +1,5 @@
 <template>
-  <main @click="onClick" class="p-5">
+  <main @click="onClick" class="App p-5">
     <router-view />
     <desktop />
   </main>

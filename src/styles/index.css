@@ -4,6 +4,13 @@
 @tailwind utilities;
 
 @layer base {
+  #app {
+    @apply text-white overflow-hidden w-screen h-screen overflow-y-auto;
+
+    background-image: url('https://wallpaperaccess.com/full/2037561.jpg');
+    background-size:cover;
+  }
+
   h1 {
     @apply text-2xl;
   }
@@ -14,5 +21,16 @@
 
   .router-link-active {
     @apply text-blue-600;
+  }
+
+  .bg-primary {
+    @apply text-white;
+  }
+
+  .dot {
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    display: inline-block;
   }
 }
