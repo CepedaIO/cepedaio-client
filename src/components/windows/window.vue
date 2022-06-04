@@ -6,7 +6,7 @@
     }"
     @click="clickedWindow"
   >
-    <header class="pl-5 pr-2 py-2 flex items-center z-10 w-full" v-move="setPosition" @dblclick="toggleFullscreen">
+    <header class="pl-5 pr-2 py-2 flex items-center z-10 w-full cursor-pointer" v-move="setPosition" @dblclick="toggleFullscreen">
       <div class="flex-grow text-center">
         {{ data.label || data.id }}
       </div>
