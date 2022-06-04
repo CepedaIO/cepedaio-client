@@ -1,5 +1,5 @@
 <template>
-  <main class="Window absolute flex flex-col"
+  <main class="Window absolute flex flex-col shadow-xl"
     :style="{ left, top }"
     :class="{
       'w-screen h-screen': fullscreen
@@ -8,7 +8,7 @@
   >
     <header class="pl-5 pr-2 py-2 flex justify-between items-center z-10 w-full" v-move="setPosition" @dblclick="toggleFullscreen">
       <span>
-        {{ data.label }}
+        {{ data.label || data.id }}
       </span>
 
       <ul class="flex">

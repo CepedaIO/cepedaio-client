@@ -8,8 +8,9 @@ interface Position {
 interface iWindow {
   id: string;
   type: string;
-  label: string;
+  label?: string;
   position: Position;
+  index?: number;
 }
 
 interface iFile {

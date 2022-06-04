@@ -1,9 +1,14 @@
-import { reactive } from "vue";
+import { computed, reactive } from "vue";
 
 export const state = reactive({
   active: null as null | HTMLElement,
   windows: [] as Array<iWindow>
 });
+
+export const getWindows = computed<iWindow[]>(() => state.windows.map((window, index) => {
+  window.index = index;
+  return window;
+}));
 
 export function getWindow(id: string): iWindow | undefined {
   return state.windows.find((window) => window.id === id);

@@ -1,6 +1,6 @@
 <template>
   <main
-    class="file inline-flex flex-col items-center cursor-default py-1 box-border"
+    class="File inline-flex flex-col items-center cursor-default py-1 box-border"
     :class="{
       'absolute': movable,
       active
@@ -11,15 +11,21 @@
     @dblclick="data.activated(data)"
     @click.stop="() => {}"
   >
-    <div class="px-2" v-if="data.icon">
-      <i class="fa-2x" :class="data.icon" />
-    </div>
+    <section class="min-h-[55px] flex flex-col items-center justify-around">
+      <div class="px-2 m-auto" v-if="data.icon">
+        <i class="fa-2x" :class="data.icon" />
+      </div>
 
-    <img v-else-if="data.image" :src="data.image" class="max-w-[50px]" />
+      <img v-else-if="data.image" :src="data.image" class="max-w-[50px] m-auto" />
 
-    <div>
-      {{ data.label || data.id }}
-    </div>
+      <div class="px-2 m-auto font-bold" v-else-if="data.iconLabel">
+        {{ data.iconLabel }}
+      </div>
+
+      <div class="px-1 mt-auto">
+        {{ data.label || data.id }}
+      </div>
+    </section>
   </main>
 </template>
 
@@ -72,6 +78,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
+  .File {
+    border: 2px solid transparent;
+  }
+
   .active {
     background-color: #D8EAF9;
     border: 2px solid #DEEDF9;

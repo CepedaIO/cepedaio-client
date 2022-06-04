@@ -1,6 +1,7 @@
 export default class FileData {
   id!: string;
   icon?: string;
+  iconLabel?: string;
   image?: string;
   label?: string;
   position: Position = {
