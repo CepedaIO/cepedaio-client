@@ -7,7 +7,7 @@
     }"
     :style="{ left, top }"
     v-move="setPosition"
-    @mousedown="onMouseDown"
+    @mousedown.stop="onMouseDown"
     @dblclick="data.activated(data)"
     @click.stop="() => {}"
   >

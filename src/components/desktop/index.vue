@@ -1,6 +1,6 @@
 <template>
   <main class="Desktop">
-    <WindowProvider v-for="[window, content, index] in windows" :window="window" :content="content" :index="index" />
+    <WindowProvider v-for="[window, content] in windows" :window="window" :content="content" />
     <app-menu class="absolute left-0 right-0 bottom-3" />
   </main>
 </template>

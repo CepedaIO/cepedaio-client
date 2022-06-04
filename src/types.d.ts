@@ -9,7 +9,7 @@ interface Position {
 interface iWindow {
   id: string;
   label?: string;
-  position: Position;
+  position: Required<Position>;
 }
 
 interface iFile {

@@ -4,7 +4,7 @@
     :class="{
       'w-screen h-screen': data.fullscreen
     }"
-    @click="clickedWindow"
+    @mousedown.stop="clickedWindow"
   >
     <header class="pl-5 pr-2 py-2 flex items-center z-10 w-full cursor-pointer" v-move="setPosition" @dblclick="toggleFullscreen">
       <div class="flex-grow text-center">
@@ -55,20 +55,17 @@ export default defineComponent({
   data() {
     return {
       movable: false,
-      oldPosition: null as null | Position
+      oldPosition: null as null | Required<Position>
     }
   },
   computed: {
     left() { return `${this.data.position.left}px`; },
     top() { return `${this.data.position.top}px`; },
-    zIndex() { return 10 + (this.data.position.index || 0); }
-  },
-  mounted() {
-    this.setPosition(this.$el.getBoundingClientRect());
+    zIndex() { return 20 - (this.data.position.index || 0); }
   },
   methods: {
     clickedWindow() {
-      focusWindow(this.data);
+      focusWindow(this.data.id);
     },
     setPosition({ left, top }: Position) {
       this.data.position.left = left;
