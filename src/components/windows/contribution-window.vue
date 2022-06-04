@@ -53,10 +53,10 @@ export default defineComponent({
   },
   computed: {
     startStr() {
-      return format(this.content.start, 'yyyy-MM');
+      return format(this.content.start, 'MMMM yyyy');
     },
     endStr() {
-      return this.content.end ? format(this.content.end, "yyyy-MM") : 'Present';
+      return this.content.end ? format(this.content.end, "MMMM yyyy") : 'Present';
     }
   }
 });
