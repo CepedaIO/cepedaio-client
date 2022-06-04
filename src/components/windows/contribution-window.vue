@@ -1,18 +1,30 @@
 <template>
   <Window :key="window.id" :data="window">
-    <header class="max-w-[350px] float-left">
-      <h1 class="text-center">{{ content.label || content.id}}</h1>
-      <img :src="content.images.hero" />
-    </header>
+    <main class="ContributionWindow h-full flex flex-col">
+      <header class="text-center mb-5">
+        <a :href="content.link" target="_blank">
+          <img :src="content.image" />
+        </a>
+        <a :href="content.link" target="_blank">
+          {{ content.link }}
+        </a>
+        <span>{{ content.start }} - {{ content.end }}</span>
+      </header>
 
-    <section>
-      <h2>What did I do?</h2>
+      <section class="overflow-auto p-2 pl-5">
+        <section class="grid grid-cols-3 text-center gap-2 mb-2">
+          <div v-for="technology in content.technologies"> {{ technology }}</div>
+        </section>
 
-      <h3>Team Leadership</h3>
-      <h4>
-        Did some stuff
-      </h4>
-    </section>
+        <section class="mb-2">
+          {{ content.description }}
+        </section>
+
+        <ul class="mb-5 list-disc ml-5">
+          <li v-for="point in content.points" class="mb-2">{{ point }}</li>
+        </ul>
+      </section>
+    </main>
   </Window>
 </template>
 
@@ -33,6 +45,11 @@ export default defineComponent({
     content: {
       type: ContributionData,
       required: true
+    }
+  },
+  computed: {
+    startStr() {
+      return form
     }
   }
 });

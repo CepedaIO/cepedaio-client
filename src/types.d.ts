@@ -40,11 +40,14 @@ interface iEmbed {
 interface iContribution {
   id: string;
   label?: string;
-  images: {
-    icon: string;
-    hero: string;
-  };
-  href: string;
+  position: string;
+  image: string;
+  link: string;
+  start: Date;
+  end?: Date;
+  technologies: string[];
+  points: string[];
+  description: string;
 }
 
 type iWindowable = iFolder | iEmbed | iContribution;

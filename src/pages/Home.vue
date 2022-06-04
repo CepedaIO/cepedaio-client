@@ -1,6 +1,6 @@
 <template>
   <main class="Home">
-    <section class>
+    <section>
       <div v-for="info in infos" :key="info[0]">
         <label>{{ info[0] }}</label>
         <span>{{ info[1] }}</span>
@@ -11,6 +11,14 @@
         <span>Yes</span>
       </div>
     </section>
+
+    <section>
+      <div v-for="info in statistics" :key="info[0]">
+        <label>{{ info[0] }}</label>
+        <span>{{ info[1] }}</span>
+      </div>
+    </section>
+
     <section class="flex flex-row flex-wrap gap-10 hidden">
       <section class="border-2 border-indigo-200 p-3 grow min-w-[350px]">
         <h2 class="text-indigo-300 mb-1">

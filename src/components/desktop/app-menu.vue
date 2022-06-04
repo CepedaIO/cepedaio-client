@@ -1,7 +1,7 @@
 <template>
-  <main class="flex flex-row">
+  <main class="flex flex-row z-[100]">
     <div class="mx-auto bg-tertiary py-3 px-5 rounded-2xl flex flex-row gap-x-4">
-      <File :data="resume" :movable="false" />
+      <File :data="resume" :movable="false" class="bounce"  />
       <File :data="github" :movable="false" />
       <File :data="linkedin" :movable="false" />
       <Folder :data="pictures" :movable="false" />
@@ -19,6 +19,7 @@ import FolderData from "../../models/FolderData";
 import ContributionData from "../../models/ContributionData";
 import File from "../file.vue";
 import Folder from "../folder.vue";
+import {fileFromWork, Numedics} from "../../data/work";
 
 export default defineComponent({
   name:'app-menu',
@@ -124,11 +125,7 @@ export default defineComponent({
             image: '/bonzi.png',
             activated: () => window.open('https://www.getapp.com/recreation-wellness-software/a/bonzi/', '_blank')
           }),
-          new FileData({
-            id: 'Numedics',
-            image: '/numedics.jpg',
-            activated: () => window.open('https://www.numedics.com/', '_blank')
-          })
+          fileFromWork(Numedics)
         ]
       })
     }
