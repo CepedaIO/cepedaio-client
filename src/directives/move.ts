@@ -1,5 +1,5 @@
 import { Directive } from "vue";
-import { iconStore } from "../store/icons";
+import { fileStore } from "../store/file";
 
 interface Options {
   mousedown: (event:MouseEvent) => void;

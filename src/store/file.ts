@@ -1,5 +1,5 @@
 import { reactive } from "vue";
 
-export const iconStore = reactive({
+export const fileStore = reactive({
   active: null as HTMLElement | null
 })

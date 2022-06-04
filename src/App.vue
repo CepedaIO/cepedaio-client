@@ -1,12 +1,12 @@
 <template>
-  <main class="flex flex-col w-screen h-screen overflow-hidden" @click="onClick">
+  <main @click="onClick">
     <router-view />
   </main>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { iconStore } from "./store/icons";
+import { fileStore } from "./store/file";
 
 export default defineComponent({
   name: "App",
@@ -21,7 +21,7 @@ export default defineComponent({
   },
   methods: {
     onClick() {
-      iconStore.active = null;
+      fileStore.active = null;
     }
   }
 });
