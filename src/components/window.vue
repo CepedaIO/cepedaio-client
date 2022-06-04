@@ -1,12 +1,11 @@
 <template>
-  <main class="absolute"
+  <main class="absolute flex flex-col"
+    :style="{ left, top }"
     :class="{
-      'w-[425px] h-[425px]': !fullscreen,
       'w-full h-full': fullscreen
     }"
-    :style="{ left, top }"
   >
-    <header class="pl-5 pr-2 py-2 flex justify-between items-center box-border z-10" v-move="setPosition" @dblclick="toggleFullscreen">
+    <header class="pl-5 pr-2 py-2 flex justify-between items-center z-10 w-full" v-move="setPosition" @dblclick="toggleFullscreen">
       <span>
         {{ data.label }}
       </span>
@@ -24,7 +23,13 @@
       </ul>
     </header>
 
-    <section class="bg-white border border-2 border-blue-300 w-full h-full box-content overflow-hidden">
+    <section
+      class="bg-white border border-2 border-blue-300 overflow-hidden"
+      :class="{
+        'w-[425px] h-[425px]': !fullscreen,
+        'w-full h-full': fullscreen
+      }"
+    >
       <slot />
     </section>
   </main>
@@ -34,8 +39,8 @@
 import { defineComponent } from "vue";
 import move from "../directives/move";
 import WindowData from "../models/WindowData";
-import { desktopStore } from "../store/desktop";
 import File from "./file.vue";
+import {closeWindow, register} from "../store/app";
 
 export function isFolder(obj:any): obj is WindowData {
   return typeof obj.id === 'string' && typeof obj.label === 'string' && Array.isArray(obj.items);
@@ -61,10 +66,6 @@ export default defineComponent({
   computed: {
     left() { return `${this.data.position.left}px`; },
     top() { return `${this.data.position.top}px`; },
-    hidden() { return !desktopStore.state.opened.includes(this.data.id); },
-  },
-  created() {
-    desktopStore.register(this.data);
   },
   mounted() {
     this.setPosition(this.$el.getBoundingClientRect());
@@ -75,7 +76,7 @@ export default defineComponent({
       this.data.position.top = top;
     },
     onClose() {
-      desktopStore.closeWindow(this.data.id);
+      closeWindow(this.data);
     },
     toggleFullscreen() {
       this.fullscreen = !this.fullscreen;

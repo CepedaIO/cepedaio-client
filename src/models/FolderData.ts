@@ -1,5 +1,4 @@
 import FileData from "./FileData";
-import WindowData from "./WindowData";
 
 export default class FolderData {
   id!: string;

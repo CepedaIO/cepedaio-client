@@ -50,23 +50,30 @@
     <section class="absolute inset-0 z-10 flex flex-row gap-3 p-2">
       <File v-for="file in files" :key="file.id" :data="file" />
       <Folder v-for="folder in folders" :key="folder.id" :data="folder" />
+
+      <Window v-for="window in windows" :key="window.id" :data="window">
+        <div class="relative w-full h-full gap-5 flex flex-row p-2">
+          <File v-for="file in window.files" :key="file.id" :data="file" :window="window"/>
+          <Folder v-for="folder in window.folders" :key="folder.id" :data="folder" />
+        </div>
+      </Window>
     </section>
   </main>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import { shuffle } from 'lodash';
+import { defineComponent } from "vue"
 import File from "../components/file.vue";
 import Folder from "../components/folder.vue";
 import ProgressBar from "../components/progress-bar.vue";
-import WindowData from "../models/WindowData";
+import Window from "../components/window.vue";
 import FileData from "../models/FileData";
 import FolderData from "../models/FolderData";
+import {state} from "../store/app";
 
 export default defineComponent({
     name: "Home",
-    components: { File, Folder, ProgressBar },
+    components: { File, Folder, ProgressBar, Window },
     data() {
         return {
           frontEndBars: [
@@ -100,7 +107,7 @@ export default defineComponent({
               label:'Home',
               activated: () => console.log('activated home')
             })
-          ],  
+          ],
           folders: [
             new FolderData({
               id: 'picture',
@@ -134,6 +141,9 @@ export default defineComponent({
                 this.remainingPhotos = shuffle(this.photos);
             this.currentPhoto = this.remainingPhotos.pop() as string;*/
         }
+    },
+    computed: {
+      windows: () => state.windows
     }
 });
 </script>

@@ -27,7 +27,8 @@
 import { defineComponent } from "vue";
 import move from "../directives/move";
 import FileData from "../models/FileData";
-import { desktopStore } from "../store/desktop";
+import {register, state} from "../store/app";
+import WindowData from "../models/WindowData";
 
 export default defineComponent({
   directives: { move },
@@ -36,15 +37,15 @@ export default defineComponent({
       type: FileData,
       required: true
     },
-    window: String
+    window: WindowData
   },
   computed: {
     left() { return `${this.data.position.left}px`; },
     top() { return `${this.data.position.top}px`; },
-    active() { return desktopStore.state.active && desktopStore.state.active === this.$el; }
+    active() { return state.active && state.active === this.$el; }
   },
   created() {
-    desktopStore.register(this.data);
+    register(this.data);
   },
   mounted() {
     this.setPosition(this.$el.getBoundingClientRect());
@@ -57,14 +58,12 @@ export default defineComponent({
   },
   methods: {
     onMouseDown() {
-      desktopStore.state.active = this.$el;
+      state.active = this.$el;
     },
     setPosition({ top, left }: Position) {
       if(this.window) {
-        const window = desktopStore.getWindow(this.window)!;
-
-        this.data.position.left = left - window.position.left;
-        this.data.position.top = top - window.position.top - 48;
+        this.data.position.left = left - this.window.position.left;
+        this.data.position.top = top - this.window.position.top - 48;
       } else {
         this.data.position.left = left;
         this.data.position.top = top + window.scrollY!;
