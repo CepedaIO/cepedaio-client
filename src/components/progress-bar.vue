@@ -1,6 +1,6 @@
 <template>
-  <main class="progress-bar border-2 border-indigo-200 rounded-xl block-inline overflow-hidden box-border min-w-[200px]">
-    <div class="min-h-[21px] bg-indigo-300" :style="{ width }" />
+  <main class="progress-bar bg-indigo-100 block-inline rounded-xl overflow-hidden box-border min-w-[200px] h-[21px]">
+    <div class="h-full bg-indigo-300" :style="{ width }" />
   </main>
 </template>
 
