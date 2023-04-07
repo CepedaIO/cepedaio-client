@@ -14,6 +14,9 @@ export default defineConfig({
       scss: { additionalData: `@import ${srcPath};\n` },
     },
   },
+  build: {
+    outDir: 'docs'
+  },
   /* remove the need to specify .vue files https://vitejs.dev/config/#resolve-extensions
   resolve: {
     extensions: [
