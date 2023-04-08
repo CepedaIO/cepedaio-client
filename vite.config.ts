@@ -15,9 +15,9 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: 'docs'
+    outDir: 'docs',
+    assetsDir: 'cepedaio-client/assets'
   },
-  publicDir: '/',
   /* remove the need to specify .vue files https://vitejs.dev/config/#resolve-extensions
   resolve: {
     extensions: [
