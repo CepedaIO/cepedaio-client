@@ -80,7 +80,7 @@ export default defineComponent({
         return {
           infos: [
             ['Name:', 'Alfred Cepeda'],
-            ['Age:', 33],
+            ['Age:', 34],
             ['Degree:', 'Bachelor\'s of Science'],
             ['School:', 'University of Central Florida'],
             ['Occupation:', 'Software Engineer'],
