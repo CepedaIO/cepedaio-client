@@ -84,7 +84,7 @@ export default defineComponent({
             ['Degree:', 'Bachelor\'s of Science'],
             ['School:', 'University of Central Florida'],
             ['Occupation:', 'Software Engineer'],
-            ['Specialization', 'Full-stack Web Development'],
+            ['Specialization:', 'Full-stack Web Development'],
             ['Skill Level:', 'Senior/Expert']
           ],
           frontEndBars: [
